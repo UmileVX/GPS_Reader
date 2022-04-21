@@ -1,5 +1,6 @@
 import serial
 import sys
+import os
 import pynmea2
 from time import sleep
 
@@ -11,9 +12,15 @@ if not ('tty' in grep_str):
     print('Wrong')
     exit(-1)
 
+
 port_name = '/dev/tty' + grep_str.split('tty')[1].split(':')[0]
+#port_name = '/dev/ttyACM0'
 print('port name: ', port_name)
 
+password = 'tech8123'
+os.system(f'echo "{password}" | sudo -S chmod 666 {port_name}')
+
+# try connect to serial device
 ser = None
 print(f'try to connect device via serial port {port_name}')
 try:
@@ -36,8 +43,9 @@ while True:
 
         #print(f'lat={latitude}, lon={longitude}')
         # write lat and long to file
-        with open('../gps.txt', 'w') as f:
-            f.write(f'lat,long={latitude},{longitude}')
+        with open('./gps.txt', 'w') as f:
+            f.write(f'{latitude}\n')
+            f.write(f'{longitude}')
             print(f'lat={latitude}, lon={longitude}')
             f.close()
     except (AttributeError):
