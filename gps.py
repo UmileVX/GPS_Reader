@@ -44,8 +44,8 @@ while True:
         #print(f'lat={latitude}, lon={longitude}')
         # write lat and long to file
         with open('./gps.txt', 'w') as f:
-            f.write(f'{latitude}\n')
-            f.write(f'{longitude}')
+            f.write(f' "lat": "{latitude}", "long": "{longitude}" ');
+            #f.write(f'{longitude}')
             print(f'lat={latitude}, lon={longitude}')
             f.close()
     except (AttributeError):
